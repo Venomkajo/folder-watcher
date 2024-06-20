@@ -1,1 +1,1 @@
-Extremely simple python program that checks whether the files in it's directory were modified.
+A simple python program that checks whether the files in it's directory were modified.
