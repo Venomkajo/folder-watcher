@@ -34,7 +34,7 @@ def folder_watcher():
         print('Error! Invalid argument.')
 
     # restart the program by typing R
-    if input('\nProgram finished.\n').upper() == 'R':
+    if input('\nProgram finished. Press R to restart.\n').upper() == 'R':
         folder_watcher()
 
     return 0
