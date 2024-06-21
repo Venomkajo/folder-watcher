@@ -25,7 +25,7 @@ def folder_watcher():
     # read the file without overwriting the save file, using a temp file to guarantee formatting
     elif argument == 'R':
         print_files(files_in_current_directory)
-        saved_data = read_savefile()
+        saved_data = read_savefile(SAVE_FILE)
         create_savefile(files_in_current_directory, TEMP_SAVE_FILE)
         current_data = get_current(TEMP_SAVE_FILE)
         delete_file(TEMP_SAVE_FILE)
@@ -60,6 +60,7 @@ def read_savefile(file_path):
             data = file.read()
             print(data)
             return data
+    return ''
         
 # overwrite or create the savefile
 def create_savefile(files_list, file_path):
@@ -69,12 +70,15 @@ def create_savefile(files_list, file_path):
 
 # delete the temporary file
 def delete_file(file_path):
-    os.remove(file_path)
+    if os.path.exists(file_path):
+        os.remove(file_path)
 
 # get the current_data
 def get_current(file_path):
-    with open(file_path, 'r') as file:
-        return file.read()
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            return file.read()
+    return ''
     
 # if contents were modified print out the missing content
 def print_modified(current_data, saved_data):
@@ -91,19 +95,19 @@ def print_modified(current_data, saved_data):
 
 # compare file lists and return the differences
 def get_modified_files(string1, string2):
-    returnValues = []
+    return_values = []
 
     list1 = string1.split('\n')
     list2 = string2.split('\n')
 
-    for i in range(len(list1)):
-        if list1[i] not in list2:
-            returnValues.append(list1[i])
+    for item in list1:
+        if item and item not in list2:
+            return_values.append(item)
 
-    for i in range(len(list2)):
-        if list2[i] not in list1:
-            returnValues.append(list2[i])
+    for item in list2:
+        if item and item not in list1:
+            return_values.append(item)
 
-    return returnValues
+    return return_values
 
 folder_watcher()
