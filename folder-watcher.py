@@ -4,40 +4,45 @@ SAVE_FILE = 'savefile.txt'
 TEMP_SAVE_FILE = 'tempsavefile.txt'
 
 def folder_watcher():
-    current_data = ''
-    saved_data = ''
-    argument = get_argument()
+    try:
+        current_data = ''
+        saved_data = ''
+        argument = get_argument()
 
-    current_directory = os.getcwd()
-    files_in_current_directory = os.listdir(current_directory)
+        current_directory = os.getcwd()
+        files_in_current_directory = os.listdir(current_directory)
 
-    # use functions based on the argument
-    # compare the files and immediately overwrite the savefile
-    if argument == 'A':
-        print_files(files_in_current_directory)
-        saved_data = read_savefile(SAVE_FILE)
-        create_savefile(files_in_current_directory, SAVE_FILE)
-        current_data = get_current(SAVE_FILE)
-        print_modified(current_data, saved_data)
-    # only overwrite the save file
-    elif argument == 'W':
-        create_savefile(files_in_current_directory, SAVE_FILE)
-    # read the file without overwriting the save file, using a temp file to guarantee formatting
-    elif argument == 'R':
-        print_files(files_in_current_directory)
-        saved_data = read_savefile(SAVE_FILE)
-        create_savefile(files_in_current_directory, TEMP_SAVE_FILE)
-        current_data = get_current(TEMP_SAVE_FILE)
-        delete_file(TEMP_SAVE_FILE)
-        print_modified(current_data, saved_data)
-    else:
-        print('Error! Invalid argument.')
+        # use functions based on the argument
+        # compare the files and immediately overwrite the savefile
+        if argument == 'A':
+            print_files(files_in_current_directory)
+            saved_data = read_savefile(SAVE_FILE)
+            create_savefile(files_in_current_directory, SAVE_FILE)
+            current_data = get_current(SAVE_FILE)
+            print_modified(current_data, saved_data)
+        # only overwrite the save file
+        elif argument == 'W':
+            create_savefile(files_in_current_directory, SAVE_FILE)
+        # read the file without overwriting the save file, using a temp file to guarantee formatting
+        elif argument == 'R':
+            print_files(files_in_current_directory)
+            saved_data = read_savefile(SAVE_FILE)
+            create_savefile(files_in_current_directory, TEMP_SAVE_FILE)
+            current_data = get_current(TEMP_SAVE_FILE)
+            delete_file(TEMP_SAVE_FILE)
+            print_modified(current_data, saved_data)
+        else:
+            print('Error! Invalid argument.')
 
-    # restart the program by typing R
-    if input('\nProgram finished. Press R to restart.\n').upper() == 'R':
-        folder_watcher()
+        # restart the program by typing R
+        if input('\nProgram finished. Press R to restart.\n').upper() == 'R':
+            folder_watcher()
 
-    return 0
+        return 0
+    
+    except Exception as e:
+        print(f'\nAn error has occured: {e}\n')
+        return 1
 
 # get the argument
 def get_argument():
