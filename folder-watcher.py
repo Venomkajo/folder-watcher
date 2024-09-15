@@ -42,6 +42,7 @@ def folder_watcher():
     
     except Exception as e:
         print(f'\nAn error has occured: {e}\n')
+        input('Press any button:')
         return 1
 
 # get the argument
