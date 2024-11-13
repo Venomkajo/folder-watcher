@@ -116,4 +116,5 @@ def get_modified_files(string1, string2):
 
     return return_values
 
-folder_watcher()
+if __name__ == '__main__':
+    folder_watcher()
